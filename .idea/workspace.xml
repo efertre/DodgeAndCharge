@@ -1,30 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="" />
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/background/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ball.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/down_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/left_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/left_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/left_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/right_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/right_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/right_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character/up_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;efertre&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/efertre/One_Game.git&quot;,
+    &quot;accountId&quot;: &quot;08f83062-767b-4db6-88d0-4efbe20cd0f7&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2o4VpGDLEgOrhsZtvbss4a4Lrr5" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.principal.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/welco/PycharmProjects/One Game&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\background" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\character" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
