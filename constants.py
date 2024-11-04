@@ -13,8 +13,10 @@ RED = (255, 0, 0)
 CHARACTER_SPEED = 5
 BALL_SPEED_RANGE = [2, 5]
 ANIMATION_SPEED = 0.1  # Cambia de fotograma cada cierto tiempo
-PROJECTILE_SPEED = 5
+PROJECTILE_SPEED = 10
 
+# Configuración de la frecuencia de disparo (en milisegundos)
+SHOOT_INTERVAL = 5  # Tiempo entre disparos en milisegundos
 # Rutas de imágenes
 BACKGROUND_IMG_PATH = "background/background.png"
 CHARACTER_UP_PATH = "character/up_"

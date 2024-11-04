@@ -2,6 +2,7 @@ import sys
 import pygame
 import random
 import constants
+import math
 
 # Inicializamos pygame
 pygame.init()
@@ -10,7 +11,7 @@ pygame.init()
 screen = pygame.display.set_mode(constants.SIZE)
 pygame.display.set_caption("Dodge & Charge")
 
-# Cargar y escalar imagen de fondo
+# Cargar imagen de fondo
 try:
     background_img = pygame.image.load(constants.BACKGROUND_IMG_PATH)
 except pygame.error:
@@ -64,16 +65,6 @@ balls = []
 ADD_BALL = pygame.USEREVENT + 1
 pygame.time.set_timer(ADD_BALL, constants.BALL_SPAWN_INTERVAL)
 
-# Configuración de poderes
-powers = []
-ADD_POWER = pygame.USEREVENT + 2
-pygame.time.set_timer(ADD_POWER, constants.POWER_SPAWN_INTERVAL)
-
-# Variables de poderes
-invulnerable = False
-speed_boost = False
-slow_balls = False
-power_timer = 0
 
 # Variables del sistema de modos
 score = 0
@@ -86,7 +77,10 @@ show_mode_text = False  # Indica si mostrar el texto de modo
 
 # Lista para proyectiles
 projectiles = []
-PROJECTILE_SPEED = 5
+shooting = False  # Bandera para saber si el botón está presionado
+# Inicializar el temporizador de disparo
+last_shot_time = 0
+
 
 # Bucle principal del juego
 run = True
@@ -95,6 +89,8 @@ while run:
     dt = clock.tick(60)  # Limitamos a 60 FPS
     score += 1  # Incrementamos el puntaje en cada ciclo
     mode_timer += dt  # Incrementa el temporizador del modo actual
+    mouse_x, mouse_y = pygame.mouse.get_pos()  # Obtener la posición del ratón
+
 
     # Alterna el modo cada 10 segundos
     if mode_timer >= mode_change_time:
@@ -102,6 +98,7 @@ while run:
         mode_timer = 0
         show_mode_text = True  # Activa la visualización del texto de cambio de modo
         mode_display_timer = pygame.time.get_ticks()  # Inicia el temporizador para el texto
+        shooting = False
 
     # Captura de eventos
     for event in pygame.event.get():
@@ -117,34 +114,76 @@ while run:
                 "speed": [random.choice([-1, 1]) * random.randint(*constants.BALL_SPEED_RANGE),
                           random.choice([-1, 1]) * random.randint(*constants.BALL_SPEED_RANGE)]
             })
-        elif event.type == ADD_POWER:
-            # Añadir un poder en una posición aleatoria
-            powerrect = pygame.Rect(random.randint(0, constants.WIDTH - 20),
-                                    random.randint(0, constants.HEIGHT - 20), 20, 20)
-            powers.append({
-                "rect": powerrect,
-                "type": random.choice(["invulnerable", "speed_boost", "slow_balls"])
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if mode == "CHARGE" and event.button == 1:  # Botón izquierdo del ratón
+                print("Pulsa")
+                shooting = True  # Activar estado de disparo
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:  # Cuando el botón izquierdo se suelta
+                print("Deja de pulsar")
+                shooting = False  # Desactivar estado de disparo
+
+    # Generación de proyectiles mientras el botón esté presionado y en intervalos controlados
+    if shooting:
+        current_time = pygame.time.get_ticks()  # Obtener el tiempo actual
+        if current_time - last_shot_time >= constants.SHOOT_INTERVAL:
+            last_shot_time = current_time  # Reiniciar el temporizador de disparo
+
+            # Obtener la posición del ratón
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+
+            # Calcular la dirección del proyectil hacia el ratón
+            dx, dy = mouse_x - characterrect.centerx, mouse_y - characterrect.centery
+            distance = math.hypot(dx, dy)
+            if distance != 0:
+                dx, dy = dx / distance, dy / distance  # Normalizar la dirección
+
+            # Crear el proyectil y añadirlo a la lista
+            projectile_rect = projectile_img.get_rect(center=characterrect.center)
+            projectiles.append({
+                "rect": projectile_rect,
+                "direction": (dx, dy)
             })
+
+    # Mover los proyectiles
+    # Mover proyectiles
+    for projectile in projectiles[:]:
+        dx, dy = projectile["direction"]
+        projectile["rect"].move_ip(dx * constants.PROJECTILE_SPEED, dy * constants.PROJECTILE_SPEED)
+
+        # Verificar si colisionan con bolas
+        for ball in balls[:]:
+            if projectile["rect"].colliderect(ball["rect"]):
+                balls.remove(ball)  # Elimina la bola
+                projectiles.remove(projectile)  # Elimina el proyectil
+                break
+
+        # Eliminar proyectiles que salen de la pantalla
+        if (projectile["rect"].bottom < 0 or projectile["rect"].top > constants.HEIGHT or
+                projectile["rect"].left < 0 or projectile["rect"].right > constants.WIDTH):
+            projectiles.remove(projectile)
 
     # Movimiento del personaje y cambio de dirección
     keys = pygame.key.get_pressed()
+
     moving = False
     new_direction = current_direction
 
-    if keys[pygame.K_UP] and characterrect.top > 0:
-        characterrect.move_ip(0, -constants.CHARACTER_SPEED * (2 if speed_boost else 1))
+    if (keys[pygame.K_UP] or keys[pygame.K_w]) and characterrect.top > 0:
+        characterrect.move_ip(0, -constants.CHARACTER_SPEED)
         new_direction = character_up
         moving = True
-    elif keys[pygame.K_DOWN] and characterrect.bottom < constants.HEIGHT:
-        characterrect.move_ip(0, constants.CHARACTER_SPEED * (2 if speed_boost else 1))
+    elif (keys[pygame.K_DOWN] or keys[pygame.K_s]) and characterrect.bottom < constants.HEIGHT:
+        characterrect.move_ip(0, constants.CHARACTER_SPEED)
         new_direction = character_down
         moving = True
-    elif keys[pygame.K_LEFT] and characterrect.left > 0:
-        characterrect.move_ip(-constants.CHARACTER_SPEED * (2 if speed_boost else 1), 0)
+    elif (keys[pygame.K_LEFT] or keys[pygame.K_a]) and characterrect.left > 0:
+        characterrect.move_ip(-constants.CHARACTER_SPEED, 0)
         new_direction = character_left
         moving = True
-    elif keys[pygame.K_RIGHT] and characterrect.right < constants.WIDTH:
-        characterrect.move_ip(constants.CHARACTER_SPEED * (2 if speed_boost else 1), 0)
+    elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and characterrect.right < constants.WIDTH:
+        characterrect.move_ip(constants.CHARACTER_SPEED, 0)
         new_direction = character_right
         moving = True
 
@@ -160,37 +199,9 @@ while run:
     else:
         animation_index = 0
 
-    # Disparar proyectiles en modo "CHARGE"
-    if mode == "CHARGE" and keys[pygame.K_SPACE]:  # Cambia la tecla según lo que desees
-        projectile_rect = projectile_img.get_rect(center=characterrect.center)
-        projectiles.append({"rect": projectile_rect, "direction": current_direction})
-
-    # Mover los proyectiles
-    for projectile in projectiles[:]:  # Iterar sobre una copia de la lista
-        if projectile["direction"] == character_up:
-            projectile["rect"].move_ip(0, -PROJECTILE_SPEED)
-        elif projectile["direction"] == character_down:
-            projectile["rect"].move_ip(0, PROJECTILE_SPEED)
-        elif projectile["direction"] == character_left:
-            projectile["rect"].move_ip(-PROJECTILE_SPEED, 0)
-        elif projectile["direction"] == character_right:
-            projectile["rect"].move_ip(PROJECTILE_SPEED, 0)
-
-        # Verificar si colisionan con bolas
-        for ball in balls[:]:
-            if projectile["rect"].colliderect(ball["rect"]):
-                balls.remove(ball)  # Elimina la bola
-                projectiles.remove(projectile)  # Elimina el proyectil
-                break
-
-        # Eliminar proyectiles que salen de la pantalla
-        if (projectile["rect"].bottom < 0 or projectile["rect"].top > constants.HEIGHT or
-                projectile["rect"].left < 0 or projectile["rect"].right > constants.WIDTH):
-            projectiles.remove(projectile)
-
     # Mover y rebotar bolas
     for ball in balls:
-        speed_factor = 0.5 if slow_balls else 1
+        speed_factor =  1
         ball["rect"] = ball["rect"].move([s * speed_factor for s in ball["speed"]])
 
         if ball["rect"].left < 0 or ball["rect"].right > constants.WIDTH:
@@ -198,7 +209,7 @@ while run:
         if ball["rect"].top < 0 or ball["rect"].bottom > constants.HEIGHT:
             ball["speed"][1] = -ball["speed"][1]
 
-        if characterrect.colliderect(ball["rect"]) and not invulnerable:
+        if characterrect.colliderect(ball["rect"]):
             run = False
 
     # Dibujar pantalla
