@@ -4,11 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Modos dodge &amp; charge principales introducidos: esquivar y disparar">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Disparos y movimientos">
+      <change afterPath="$PROJECT_DIR$/assets/fonts/pixel.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ball.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/character.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projectile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ball.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ball/ball.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/character.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/character.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/down_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/down_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/left_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/left_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/left_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/left_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/left_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/left_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/right_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/right_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/right_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/right_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/right_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/right_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character/up_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/character/up_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proyectil.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/projectile/projectile.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,24 +61,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.constants.executor&quot;: &quot;Run&quot;,
-    &quot;Python.principal.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/welco/PycharmProjects/One Game&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ball.executor": "Run",
+    "Python.constants.executor": "Run",
+    "Python.principal.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/welco/PycharmProjects/One Game",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\welco\PycharmProjects\One Game" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\fonts" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\ball" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\projectile" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\background" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\character" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -98,12 +116,21 @@
       <option name="project" value="LOCAL" />
       <updated>1730593427735</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Disparos y movimientos">
+      <option name="closed" value="true" />
+      <created>1730736383795</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730736383795</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Prototipo del juego, movimiento, animaciones y logica basica" />
     <MESSAGE value="Modos dodge &amp; charge principales introducidos: esquivar y disparar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modos dodge &amp; charge principales introducidos: esquivar y disparar" />
+    <MESSAGE value="Disparos y movimientos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disparos y movimientos" />
   </component>
 </project>
