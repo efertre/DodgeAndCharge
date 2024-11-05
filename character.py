@@ -6,10 +6,10 @@ from utils import Utils
 class Character:
     def __init__(self, center_position):
         self.animations = {
-            "up": Utils.load_animation(constants.CHARACTER_UP_PATH, 1, constants.CHARACTER_SIZE),
-            "down": Utils.load_animation(constants.CHARACTER_DOWN_PATH, 1, constants.CHARACTER_SIZE),
-            "left": Utils.load_animation(constants.CHARACTER_LEFT_PATH, 3, constants.CHARACTER_SIZE),
-            "right": Utils.load_animation(constants.CHARACTER_RIGHT_PATH, 3, constants.CHARACTER_SIZE)
+            "up": Utils.load_animation(constants.CHARACTER_UP_PATH, 4, constants.CHARACTER_SIZE),
+            "down": Utils.load_animation(constants.CHARACTER_DOWN_PATH, 6, constants.CHARACTER_SIZE),
+            "left": Utils.load_animation(constants.CHARACTER_LEFT_PATH, 8, constants.CHARACTER_SIZE),
+            "right": Utils.load_animation(constants.CHARACTER_RIGHT_PATH, 8, constants.CHARACTER_SIZE)
         }
         self.current_direction = self.animations["down"]
         self.rect = self.current_direction[0].get_rect(center=center_position)

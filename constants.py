@@ -19,15 +19,15 @@ SHOOT_INTERVAL = 750  # Frecuencia de disparo (en milisegundos)
 
 # Rutas de imágenes
 BACKGROUND_IMG_PATH = "background/background.png"
-CHARACTER_UP_PATH = "assets/character/up_"
-CHARACTER_DOWN_PATH = "assets/character/down_"
-CHARACTER_LEFT_PATH = "assets/character/left_"
-CHARACTER_RIGHT_PATH = "assets/character/right_"
+CHARACTER_UP_PATH = "assets/character/up/up_"
+CHARACTER_DOWN_PATH = "assets/character/down/down_"
+CHARACTER_LEFT_PATH = "assets/character/left/left_"
+CHARACTER_RIGHT_PATH = "assets/character/right/right_"
 BALL_IMG_PATH = "assets/ball/ball.png"
 PROJECTILE_IMG_PATH = "assets/projectile/projectile.png"
 
 # Tamaño del personaje y las bolas
-CHARACTER_SIZE = (30, 40)  # Ancho y alto del personaje
+CHARACTER_SIZE = (50, 60)  # Ancho y alto del personaje
 BALL_SIZE = (30, 30)       # Ancho y alto de la bola
 PROJECTILE_SIZE = (20,20)
 

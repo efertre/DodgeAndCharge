@@ -31,6 +31,7 @@ except pygame.error:
 # Configuración del personaje
 player = Character(center_position=(constants.WIDTH // 2, constants.HEIGHT // 2))
 
+
 # Configuración de las bolas
 balls = []
 ADD_BALL = pygame.USEREVENT + 1
@@ -72,7 +73,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         elif event.type == ADD_BALL:
-            balls.append(Ball())
+            balls.append(Ball(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if mode == "CHARGE" and event.button == 1:  # Botón izquierdo del ratón
                 shooting = True  # Activar estado de disparo
