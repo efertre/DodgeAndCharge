@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Animaciones del character más pulidas y mejores generadores de bolas">
-      <change afterPath="$PROJECT_DIR$/background/main_menu_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mainMenu.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/heart.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statsMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/background/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/background/background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/character/character.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/character.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,29 +58,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ball.executor": "Run",
-    "Python.character.executor": "Run",
-    "Python.constants.executor": "Run",
-    "Python.mainMenu.executor": "Run",
-    "Python.principal.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/welco/PycharmProjects/One Game",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ball.executor&quot;: &quot;Run&quot;,
+    &quot;Python.character.executor&quot;: &quot;Run&quot;,
+    &quot;Python.constants.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mainMenu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.principal.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/welco/PycharmProjects/One Game&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\welco\PycharmProjects\One Game" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\heart" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\hearts" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\background" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\down" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\up" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\left" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\right" />
     </key>
   </component>
   <component name="SharedIndexes">

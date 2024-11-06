@@ -27,13 +27,15 @@ CHARACTER_UP_PATH = "assets/character/up/up_"
 CHARACTER_DOWN_PATH = "assets/character/down/down_"
 CHARACTER_LEFT_PATH = "assets/character/left/left_"
 CHARACTER_RIGHT_PATH = "assets/character/right/right_"
+CHARACTER_HEART_PATH = "assets/character/heart/heart_"
 BALL_IMG_PATH = "assets/ball/ball.png"
 PROJECTILE_IMG_PATH = "assets/projectile/projectile.png"
 
 # Tamaño del personaje y las bolas
 CHARACTER_SIZE = (50, 60)  # Ancho y alto del personaje
 BALL_SIZE = (30, 30)       # Ancho y alto de la bola
-PROJECTILE_SIZE = (20,20)
+PROJECTILE_SIZE = (20,20) # Ancho y alto deL proyectil
+HEART_SIZE = (25,25) # Ancho y alto del corazón
 
 # Configuración de bolas
 BALL_SPAWN_INTERVAL = 5000  # en milisegundos (5 segundos)

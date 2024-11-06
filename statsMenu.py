@@ -2,10 +2,9 @@
 import pygame
 import constants
 
-class MainMenu:
+class StatsMenu:
     def __init__(self, screen):
         self.screen = screen
-        self.buttons = ["Jugar", "Opciones", "Estadísticas", "Salir" ]
         self.selected_index = 0  # Índice del botón seleccionado
         self.title_font = pygame.font.Font(constants.FONT_PATH, constants.TITLE_FONT_SIZE)
         self.subtitle_font = pygame.font.Font(constants.FONT_PATH, constants.SUBTITLE_FONT_SIZE)

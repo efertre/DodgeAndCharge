@@ -15,6 +15,7 @@ class Character:
         self.rect = self.current_direction[0].get_rect(center=center_position)
         self.animation_index = 0
         self.animation_counter = 0
+        self.hearts = 3
 
     def move(self, keys):
         moving = False

@@ -5,8 +5,10 @@ import constants
 from character import Character
 from ball import Ball
 from constants import FONT_PATH
+from heart import Heart
 from mainMenu import MainMenu
 from projectile import Projectile
+from utils import Utils
 
 # Inicializamos pygame
 pygame.init()
@@ -60,6 +62,12 @@ background_speed = 1  # Velocidad de desplazamiento del fondo
 menu = MainMenu(screen)
 in_main_menu = True  # Comienza en el menú principal
 
+# Cargar las imágenes para la animación de corazones
+heart_images = Utils.load_animation(constants.CHARACTER_HEART_PATH, 8, constants.HEART_SIZE)
+
+# Instancia de la animación de corazones con posición y vidas iniciales
+heart_display = Heart(10, 50, heart_images, player.hearts)
+
 # Bucle principal del juego
 clock = pygame.time.Clock()
 run = True
@@ -95,6 +103,8 @@ while run:
                 in_main_menu = False
             elif btnSelected == "Opciones":
                 print("Opciones seleccionadas")  # Puede redirigir a una pantalla de opciones (FALTA POR IMPLEMENTAR)
+            elif btnSelected == "Estadísticas":
+                print("Estadísticas seleccionadas")  # Puede redirigir a una pantalla de estadísticas (FALTA POR IMPLEMENTAR)
             elif btnSelected == "Salir":
                 run = False
         else:
@@ -164,7 +174,11 @@ while run:
         for ball in balls[:]:
             ball.move()
             if player.rect.colliderect(ball.rect):
-                run = False  # Terminar el juego si el personaje colisiona con una bola
+                player.hearts -= 1
+                heart_display.lives -= 1
+                balls.remove(ball)
+                if player.hearts == 0:
+                    run = False  # Terminar el juego si el personaje colisiona con una bola 3 veces
 
         # Dibujar pantalla
         screen.blit(background_img, (0, 0))
@@ -173,6 +187,12 @@ while run:
         # Dibujar bolas
         for ball in balls:
             ball.draw(screen)
+
+        # Actualizar la animación de los corazones
+        heart_display.update()
+
+        # Dibujar los corazones en pantalla
+        heart_display.draw(screen)
 
         # Dibujar proyectiles
         for projectile in projectiles:
