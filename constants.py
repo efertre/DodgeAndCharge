@@ -6,8 +6,11 @@ HEIGHT = 600
 SIZE = (WIDTH, HEIGHT)
 
 # Colores
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+GRAY =  (128,128,128)
+BLACK = (255, 255, 255)
+YELLOW = (255, 255, 0)
+RED = (255, 255, 255)
 
 # Velocidades
 CHARACTER_SPEED = 5
@@ -19,6 +22,7 @@ SHOOT_INTERVAL = 750  # Frecuencia de disparo (en milisegundos)
 
 # Rutas de imágenes
 BACKGROUND_IMG_PATH = "background/background.png"
+MAIN_MENU_BACKGROUND_IMG_PATH = "background/main_menu_background.png"
 CHARACTER_UP_PATH = "assets/character/up/up_"
 CHARACTER_DOWN_PATH = "assets/character/down/down_"
 CHARACTER_LEFT_PATH = "assets/character/left/left_"
@@ -37,6 +41,9 @@ POWER_SPAWN_INTERVAL = 15000 # AÚN QUEDA POR IMPLEMENTAR
 POWER_DURATION = 10000 # AÚN QUEDA POR IMPLEMENTAR
 
 # Fuente
+TITLE_FONT_SIZE = 60
+SUBTITLE_FONT_SIZE = 25
+BUTTON_FONT_SIZE = 20
 FONT_SIZE = 18
 MODE_FONT_SIZE = 80 # Tamaño para la fuente de cambiar de modo
 FONT_PATH = "assets/fonts/pixel.ttf" # Fuente pixelada personalizada
