@@ -1,28 +1,26 @@
-# Constantes y configuraciones
-
-# Configuración de pantalla
-WIDTH = 800
-HEIGHT = 600
+# Inicializar dimensiones predeterminadas
+WIDTH = 800  # Un valor predeterminado
+HEIGHT = 600  # Un valor predeterminado
 SIZE = (WIDTH, HEIGHT)
 
 # Colores
 WHITE = (255, 255, 255)
-GRAY =  (128,128,128)
-BLACK = (255, 255, 255)
+GRAY = (128, 128, 128)
+BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
-RED = (255, 255, 255)
+RED = (255, 0, 0)
 
 # Velocidades
 CHARACTER_SPEED = 5
 BALL_SPEED_RANGE = [2, 5]
-ANIMATION_SPEED = 0.1  # Cambia de fotograma cada cierto tiempo
-PROJECTILE_SPEED = 8  # Velocidad de dipsaro (en milisegundos)
-SHOOT_INTERVAL = 750  # Frecuencia de disparo (en milisegundos)
-
+ANIMATION_SPEED = 0.1
+PROJECTILE_SPEED = 10
+SHOOT_INTERVAL = 500
 
 # Rutas de imágenes
-BACKGROUND_IMG_PATH = "background/background.png"
-MAIN_MENU_BACKGROUND_IMG_PATH = "background/main_menu_background.png"
+BACKGROUND_IMG_PATH = "assets/background/background.png"
+MAIN_MENU_BACKGROUND_IMG_PATH = "assets/background/main_menu_background.png"
+STATS_MENU_BACKGROUND_IMG_PATH = "assets/background/main_menu_background_blurred.png"
 CHARACTER_UP_PATH = "assets/character/up/up_"
 CHARACTER_DOWN_PATH = "assets/character/down/down_"
 CHARACTER_LEFT_PATH = "assets/character/left/left_"
@@ -31,21 +29,56 @@ CHARACTER_HEART_PATH = "assets/character/heart/heart_"
 BALL_IMG_PATH = "assets/ball/ball.png"
 PROJECTILE_IMG_PATH = "assets/projectile/projectile.png"
 
-# Tamaño del personaje y las bolas
-CHARACTER_SIZE = (50, 60)  # Ancho y alto del personaje
-BALL_SIZE = (30, 30)       # Ancho y alto de la bola
-PROJECTILE_SIZE = (20,20) # Ancho y alto deL proyectil
-HEART_SIZE = (25,25) # Ancho y alto del corazón
+# Posición del fondo animado del menú stats y principal
+BACKGROUND_POSITION = 0
+BACKGROUND_SPEED = 1
+
+# Tamaños (se inicializan en initialize_constants)
+CHARACTER_SIZE = None
+BALL_SIZE = None
+PROJECTILE_SIZE = None
+HEART_SIZE = None
+TITLE_FONT_SIZE = None
+SUBTITLE_FONT_SIZE = None
+BUTTON_FONT_SIZE = None
+FONT_SIZE = None
+MODE_FONT_SIZE = None
+
+# Límites del mapa
+MOVEMENT_MARGIN_TOP = 350
+MOVEMENT_MARGIN_BOTTOM = 950
+MOVEMENT_MARGIN_LEFT = 270
+MOVEMENT_MARGIN_RIGHT = 250
+# Fuente
+FONT_PATH = "assets/fonts/pixel.ttf"
 
 # Configuración de bolas
-BALL_SPAWN_INTERVAL = 5000  # en milisegundos (5 segundos)
-POWER_SPAWN_INTERVAL = 15000 # AÚN QUEDA POR IMPLEMENTAR
-POWER_DURATION = 10000 # AÚN QUEDA POR IMPLEMENTAR
+BALL_SPAWN_INTERVAL = 2500  # en milisegundos (2.5 segundos)
+POWER_SPAWN_INTERVAL = 15000  # AÚN QUEDA POR IMPLEMENTAR
+POWER_DURATION = 10000  # AÚN QUEDA POR IMPLEMENTAR
 
-# Fuente
-TITLE_FONT_SIZE = 60
-SUBTITLE_FONT_SIZE = 25
-BUTTON_FONT_SIZE = 20
-FONT_SIZE = 18
-MODE_FONT_SIZE = 80 # Tamaño para la fuente de cambiar de modo
-FONT_PATH = "assets/fonts/pixel.ttf" # Fuente pixelada personalizada
+
+# Función para inicializar el tamaño de pantalla
+def initialize_constants(width, height):
+    global WIDTH, HEIGHT, SIZE, SCALE, CHARACTER_SIZE, BALL_SIZE, PROJECTILE_SIZE, HEART_SIZE
+    global TITLE_FONT_SIZE, SUBTITLE_FONT_SIZE, BUTTON_FONT_SIZE, FONT_SIZE, MODE_FONT_SIZE
+
+    WIDTH = width
+    HEIGHT = height
+    SIZE = (WIDTH, HEIGHT)
+
+    # Factor de escala basado en la resolución
+    SCALE = WIDTH / 1920  # Basado en una referencia de 1920x1080
+
+    # Escalar tamaños usando SCALE
+    CHARACTER_SIZE = (int(70 * SCALE), int(80 * SCALE))
+    BALL_SIZE = (int(60 * SCALE), int(60 * SCALE))
+    PROJECTILE_SIZE = (int(30 * SCALE), int(30 * SCALE))
+    HEART_SIZE = (int(50 * SCALE), int(50 * SCALE))  # Escalado
+
+    # Escalar fuentes
+    TITLE_FONT_SIZE = int(60 * SCALE)
+    SUBTITLE_FONT_SIZE = int(25 * SCALE)
+    BUTTON_FONT_SIZE = int(20 * SCALE)
+    FONT_SIZE = int(28 * SCALE)
+    MODE_FONT_SIZE = int(80 * SCALE)

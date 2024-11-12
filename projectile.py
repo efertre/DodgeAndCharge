@@ -1,19 +1,18 @@
 # projectile.py
+from turtledemo.penrose import start
+
 import pygame
 import constants
-import math
-
 
 class Projectile:
-    def __init__(self, start_pos, target_pos):
+    def __init__(self, start_pos, target_pos, dir):
         # Cargar y escalar imagen del proyectil
         self.image = pygame.transform.scale(pygame.image.load(constants.PROJECTILE_IMG_PATH), constants.PROJECTILE_SIZE)
+        # El proyectil se coloca en la posición central del jugador
         self.rect = self.image.get_rect(center=start_pos)
 
-        # Calcular la dirección normalizada hacia el objetivo
-        dx, dy = target_pos[0] - start_pos[0], target_pos[1] - start_pos[1]
-        distance = math.hypot(dx, dy)
-        self.direction = (dx / distance, dy / distance) if distance != 0 else (0, 0)
+        # Calcular la dirección normalizada hacia el objetivo, desde el centro del mapa a la dirección del cursor
+        self.direction = (target_pos - dir).normalize()
 
     def move(self):
         # Mover el proyectil en la dirección calculada
@@ -26,5 +25,8 @@ class Projectile:
 
     def is_off_screen(self):
         # Verificar si el proyectil sale de la pantalla
-        return (self.rect.bottom < 0 or self.rect.top > constants.HEIGHT or
-                self.rect.left < 0 or self.rect.right > constants.WIDTH)
+        # Esto se hace verificando si el proyectil está fuera de los márgenes
+        return (self.rect.bottom > constants.HEIGHT + constants.MOVEMENT_MARGIN_BOTTOM or
+                self.rect.top < constants.MOVEMENT_MARGIN_TOP or
+                self.rect.left < constants.MOVEMENT_MARGIN_LEFT or
+                self.rect.right > constants.WIDTH + constants.MOVEMENT_MARGIN_RIGHT)

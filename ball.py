@@ -6,8 +6,9 @@ import random
 def random_position_generator(width, height, rect_width, rect_height, player_rect, min_distance):
     """Generador para posiciones aleatorias dentro de los límites de la pantalla, evitando cercanía al jugador."""
     while True:
-        x = random.randint(0, width - rect_width)
-        y = random.randint(0, height - rect_height)
+        x = random.randint(constants.MOVEMENT_MARGIN_LEFT, width - rect_width + constants.MOVEMENT_MARGIN_RIGHT)
+        y = random.randint(constants.MOVEMENT_MARGIN_TOP, height - rect_height + constants.MOVEMENT_MARGIN_BOTTOM)
+
         new_position = pygame.Rect(x, y, rect_width, rect_height)
 
         # Verificar si la nueva posición está a una distancia segura del jugador
@@ -45,9 +46,9 @@ class Ball:
         # Mover la bola y hacer que rebote en los bordes de la pantalla
         self.rect.move_ip(*self.speed)
 
-        if self.rect.left < 0 or self.rect.right > constants.WIDTH:
+        if self.rect.left < 0 + constants.MOVEMENT_MARGIN_LEFT or self.rect.right > constants.WIDTH + constants.MOVEMENT_MARGIN_RIGHT:
             self.speed[0] = -self.speed[0]
-        if self.rect.top < 0 or self.rect.bottom > constants.HEIGHT:
+        if self.rect.top < 0 + constants.MOVEMENT_MARGIN_TOP or self.rect.bottom > constants.HEIGHT + constants.MOVEMENT_MARGIN_BOTTOM:
             self.speed[1] = -self.speed[1]
 
     def draw(self, surface):

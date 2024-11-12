@@ -2,16 +2,24 @@
 import sys
 import pygame
 import constants
+from camera import Camera
 from character import Character
 from ball import Ball
-from constants import FONT_PATH
 from heart import Heart
 from mainMenu import MainMenu
 from projectile import Projectile
+from statsMenu import StatsMenu
 from utils import Utils
+from utils import save_stats
 
 # Inicializamos pygame
 pygame.init()
+
+# Obtener tamaño de pantalla del monitor
+WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
+
+# Inicializar constantes con tamaño de pantalla
+constants.initialize_constants(WIDTH, HEIGHT)
 
 # Definir el tamaño inicial y el modo de la pantalla
 screen = pygame.display.set_mode(constants.SIZE)  # Inicia en modo ventana
@@ -32,7 +40,7 @@ except pygame.error:
     sys.exit()
 
 # Configuración del personaje
-player = Character(center_position=(constants.WIDTH // 2, constants.HEIGHT // 2))
+player = Character(center_position=(WIDTH // 2, HEIGHT // 2), width=WIDTH, height=HEIGHT)
 
 
 # Configuración de las bolas
@@ -62,14 +70,27 @@ background_speed = 1  # Velocidad de desplazamiento del fondo
 menu = MainMenu(screen)
 in_main_menu = True  # Comienza en el menú principal
 
+# Instancia del Menú Estadísticas
+statistics_menu = StatsMenu(screen)
+in_statistics_menu = False
+
+# Verificación menú de juego
+in_play_menu = False
+
 # Cargar las imágenes para la animación de corazones
 heart_images = Utils.load_animation(constants.CHARACTER_HEART_PATH, 8, constants.HEART_SIZE)
 
 # Instancia de la animación de corazones con posición y vidas iniciales
 heart_display = Heart(10, 50, heart_images, player.hearts)
 
+# Inicializa el tamaño del nivel
+LEVEL_WIDTH = 2000
+LEVEL_HEIGHT = 2000
+
+# Inicializa la cámara en el juego
+camera = Camera(LEVEL_WIDTH, LEVEL_HEIGHT)
+
 # Bucle principal del juego
-clock = pygame.time.Clock()
 run = True
 while run:
     dt = clock.tick(60)
@@ -86,7 +107,7 @@ while run:
             if event.type == pygame.MOUSEMOTION: # Controla los movimientos de la posición del ratón
                 menu.handle_mouse(event.pos)
             elif event.type == pygame.MOUSEBUTTONDOWN: # Controla los clics del ratón
-                btnSelected = menu.handle_click()
+                btnSelected = menu.handle_mouse(event.pos)
             elif event.type == pygame.KEYDOWN: # Controla las teclas presionadas
                 btnSelected = menu.handle_keys(event)
                 if event.key == pygame.K_F11: # Si se le da a la tecla F11 se pone en Pantalla Completa
@@ -101,13 +122,32 @@ while run:
             # Procesa acciones del menú principal
             if btnSelected == "Jugar":
                 in_main_menu = False
+                in_play_menu = True
             elif btnSelected == "Opciones":
                 print("Opciones seleccionadas")  # Puede redirigir a una pantalla de opciones (FALTA POR IMPLEMENTAR)
             elif btnSelected == "Estadísticas":
-                print("Estadísticas seleccionadas")  # Puede redirigir a una pantalla de estadísticas (FALTA POR IMPLEMENTAR)
+                in_main_menu = False
+                in_statistics_menu = True  # Cambiar al menú de estadísticas
             elif btnSelected == "Salir":
                 run = False
-        else:
+        elif in_statistics_menu:
+            if event.type == pygame.MOUSEMOTION:
+                selected_option = statistics_menu.handle_mouse(event.pos)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                selected_option = statistics_menu.handle_mouse(event.pos)
+                if selected_option == "Volver":
+                    in_statistics_menu = False
+                    in_main_menu = True
+                elif selected_option == "Borrar datos":
+                    statistics_menu.execute_option()  # Borra datos si esta opción está seleccionada
+            elif event.type == pygame.KEYDOWN:
+                selected_option = statistics_menu.handle_keys(event)
+                if selected_option == "Volver":
+                    in_statistics_menu = False
+                    in_main_menu = True
+                elif selected_option == "Borrar datos":
+                    statistics_menu.execute_option()
+        elif in_play_menu:
             if event.type == ADD_BALL:
                 balls.append(Ball(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -131,7 +171,9 @@ while run:
         # Si está en el menú, dibujarlo; si no, correr el juego
     if in_main_menu:
         menu.draw()
-    else:
+    elif in_statistics_menu:
+        statistics_menu.draw()
+    elif in_play_menu:
 
         score += 1  # Incrementamos el puntaje en cada ciclo
         mode_timer += dt  # Incrementa el temporizador del modo actual
@@ -144,16 +186,27 @@ while run:
             show_mode_text = True  # Activa la visualización del texto de cambio de modo
             mode_display_timer = pygame.time.get_ticks()  # Inicia el temporizador para el texto
             shooting = False
+
         # Movimiento del personaje
         player.move(keys)
+
+        # Actualizar la posición de la cámara según la posición del personaje
+        camera.update(player)
 
         # Manejar el disparo de proyectiles
         if shooting:
             current_time = pygame.time.get_ticks()
             if current_time - last_shot_time >= constants.SHOOT_INTERVAL:
                 last_shot_time = current_time
-                mouse_x, mouse_y = pygame.mouse.get_pos()
-                projectiles.append(Projectile(start_pos=player.rect.center, target_pos=(mouse_x, mouse_y)))
+                mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
+                player_pos = pygame.Vector2(player.rect.center)
+                dir = pygame.Vector2(WIDTH / 2, HEIGHT / 2)
+
+                projectiles.append(Projectile(start_pos=player_pos, target_pos=mouse_pos, dir=dir))
+
+        # Dibujar fondo y personaje
+        screen.blit(background_img, camera.apply(background_img.get_rect()))
+        player.draw(screen, camera)
 
         # Mover proyectiles y verificar colisiones
         for projectile in projectiles[:]:
@@ -178,15 +231,13 @@ while run:
                 heart_display.lives -= 1
                 balls.remove(ball)
                 if player.hearts == 0:
+                    # Guarda el puntaje total (dividiendo entre 60 para puntos por segundo)
+                    save_stats(score // 60)
                     run = False  # Terminar el juego si el personaje colisiona con una bola 3 veces
 
-        # Dibujar pantalla
-        screen.blit(background_img, (0, 0))
-        player.draw(screen)
-
-        # Dibujar bolas
+        # Dibujar bolas ajustadas con la cámara
         for ball in balls:
-            ball.draw(screen)
+            screen.blit(ball.image, camera.apply(ball.rect))
 
         # Actualizar la animación de los corazones
         heart_display.update()
@@ -194,9 +245,9 @@ while run:
         # Dibujar los corazones en pantalla
         heart_display.draw(screen)
 
-        # Dibujar proyectiles
+        # Dibujar proyectiles ajustados con la cámara
         for projectile in projectiles:
-            projectile.draw(screen)
+            screen.blit(projectile.image, camera.apply(projectile.rect))
 
         # Muestra texto de modo en pantalla durante 2 segundos
         if show_mode_text:
@@ -204,7 +255,7 @@ while run:
             font_big = pygame.font.Font(constants.FONT_PATH, constants.MODE_FONT_SIZE)
 
             # Renderizar el texto del modo
-            mode_text = font_big.render(mode, True, constants.RED)
+            mode_text = font_big.render(mode, True, constants.WHITE)
 
             # Posición para centrar el texto
             text_x = constants.WIDTH // 2 - mode_text.get_width() // 2
@@ -220,7 +271,7 @@ while run:
         # Mostrar puntaje en la pantalla
         font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
         score_text = font.render(f"Puntos: {score // 60}", True,
-                                     constants.BLACK)  # Dividimos para obtener puntos por segundo
+                                     constants.WHITE)  # Dividimos para obtener puntos por segundo
         screen.blit(score_text, (10, 10))
     pygame.display.flip()
 

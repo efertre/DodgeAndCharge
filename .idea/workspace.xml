@@ -4,23 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Animaciones del character más pulidas y mejores generadores de bolas">
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/character/heart/heart_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/heart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statsMenu.py" afterDir="false" />
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Vidas del personaje con animación">
+      <change afterPath="$PROJECT_DIR$/camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/character/character.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/background/background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background/background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background/background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background/background.psd" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background/background.psd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background/main_menu_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background/main_menu_background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/ball.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/character.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectile.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statsMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/statsMenu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,10 +59,14 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.ball.executor&quot;: &quot;Run&quot;,
+    &quot;Python.camera.executor&quot;: &quot;Run&quot;,
     &quot;Python.character.executor&quot;: &quot;Run&quot;,
     &quot;Python.constants.executor&quot;: &quot;Run&quot;,
     &quot;Python.mainMenu.executor&quot;: &quot;Run&quot;,
     &quot;Python.principal.executor&quot;: &quot;Run&quot;,
+    &quot;Python.projectile.executor&quot;: &quot;Run&quot;,
+    &quot;Python.statsMenu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.utils.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/welco/PycharmProjects/One Game&quot;,
@@ -76,11 +78,11 @@
       <recent name="C:\Users\welco\PycharmProjects\One Game" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\background" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\heart" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\hearts" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\background" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\down" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\up" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -139,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730771361993</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Vidas del personaje con animación">
+      <option name="closed" value="true" />
+      <created>1730913169273</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1730913169273</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -148,6 +158,18 @@
     <MESSAGE value="Disparos y movimientos" />
     <MESSAGE value="Separación por clases, fullscreen y fonts personalizadas" />
     <MESSAGE value="Animaciones del character más pulidas y mejores generadores de bolas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Animaciones del character más pulidas y mejores generadores de bolas" />
+    <MESSAGE value="Vidas del personaje con animación" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vidas del personaje con animación" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/statsMenu.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -17,20 +17,11 @@ class MainMenu:
         try:
             self.background_img = pygame.image.load(constants.MAIN_MENU_BACKGROUND_IMG_PATH).convert()
             self.bg_width = self.background_img.get_width()
-            self.bg_x = 0  # Posición inicial del fondo
-            self.bg_speed = 1  # Velocidad de desplazamiento
         except pygame.error:
-            print("No se pudo cargar la imagen de fondo del menú.")
+            print("No se pudo cargar la imagen de fondo del menú principal.")
 
     def draw(self):
-        # Dibujar fondo animado
-        self.screen.blit(self.background_img, (self.bg_x, 0))
-        self.screen.blit(self.background_img, (self.bg_x - self.bg_width, 0))
-
-        # Actualizar la posición del fondo para que se desplace
-        self.bg_x += self.bg_speed
-        if self.bg_x >= self.bg_width:
-            self.bg_x = 0  # Reiniciar la posición para hacer el bucle
+        self.draw_animated_bg()
 
         # Dibujar título
         title_surf = self.title_font.render(self.title, True, constants.WHITE)
@@ -49,6 +40,18 @@ class MainMenu:
             button_rect = button_surf.get_rect(center=(constants.WIDTH // 2, constants.HEIGHT // 2 + index * 40))
             self.screen.blit(button_surf, button_rect)
 
+    # Metodo para dibujar el fondo animado
+    def draw_animated_bg(self):
+        # Dibujar fondo animado con desplazamiento fluido
+        self.screen.blit(self.background_img, (constants.BACKGROUND_POSITION, 0))
+        self.screen.blit(self.background_img, (constants.BACKGROUND_POSITION - self.bg_width, 0))
+        # Actualizar la posición del fondo para que se desplace
+        constants.BACKGROUND_POSITION += constants.BACKGROUND_SPEED  # Velocidad de desplazamiento
+        # Si el fondo se ha desplazado completamente fuera de la pantalla, reiniciarlo
+        if constants.BACKGROUND_POSITION >= self.bg_width:
+            constants.BACKGROUND_POSITION = 0
+
+    # Metodo para controlar el ratón
     def handle_mouse(self, mouse_pos):
         # Detectar si el mouse está sobre algún botón
         for index, button_text in enumerate(self.buttons):
@@ -56,12 +59,9 @@ class MainMenu:
                 center=(constants.WIDTH // 2, constants.HEIGHT // 2 + index * 40))
             if button_rect.collidepoint(mouse_pos):
                 self.selected_index = index
-                break
+                return self.buttons[index]
 
-    def handle_click(self):
-        # Retorna el nombre del botón seleccionado cuando se hace clic
-        return self.buttons[self.selected_index]
-
+    # Metodo para controlar las teclas
     def handle_keys(self, event):
         # Navegación con teclas
         if event.key in (pygame.K_DOWN, pygame.K_s):
