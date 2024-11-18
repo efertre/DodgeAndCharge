@@ -2,9 +2,10 @@
 import sys
 import pygame
 import constants
+from slime import Slime
 from camera import Camera
 from character import Character
-from ball import Ball
+
 from heart import Heart
 from mainMenu import MainMenu
 from projectile import Projectile
@@ -149,7 +150,7 @@ while run:
                     statistics_menu.execute_option()
         elif in_play_menu:
             if event.type == ADD_BALL:
-                balls.append(Ball(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
+                balls.append(Slime(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if mode == "CHARGE" and event.button == 1:  # Botón izquierdo del ratón
                     shooting = True  # Activar estado de disparo
@@ -227,9 +228,14 @@ while run:
         for ball in balls[:]:
             ball.move()
             if player.rect.colliderect(ball.rect):
+
                 player.hearts -= 1
                 heart_display.lives -= 1
                 balls.remove(ball)
+
+                # Iniciar el efecto de temblor de pantalla
+                camera.start_shake(duration=15, intensity=10)  # Temblor de 15 frames e intensidad 10
+
                 if player.hearts == 0:
                     # Guarda el puntaje total (dividiendo entre 60 para puntos por segundo)
                     save_stats(score // 60)
@@ -237,7 +243,16 @@ while run:
 
         # Dibujar bolas ajustadas con la cámara
         for ball in balls:
-            screen.blit(ball.image, camera.apply(ball.rect))
+            # Obtener el frame actual de la animación
+            frame = ball.animations[ball.animation_index]
+
+            # Verificar si la bola está volteada horizontalmente
+            if ball.flipped:
+                frame = pygame.transform.flip(frame, True, False)  # Voltear horizontalmente si está flipped
+
+            # Dibujar la bola ajustada con la cámara
+            screen.blit(frame, camera.apply(ball.rect))
+
 
         # Actualizar la animación de los corazones
         heart_display.update()

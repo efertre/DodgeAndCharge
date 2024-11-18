@@ -4,8 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Implementación de estadísticas (persistencia) y refactorización">
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Implementación del json de estadísticas (no se hizo el commit correctamente)">
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_06.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_07.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_08.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/ball/ball.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/slime.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/stats.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +79,11 @@
       <recent name="C:\Users\welco\PycharmProjects\One Game" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\green_slime" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\background" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\heart" />
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\hearts" />
-      <recent name="C:\Users\welco\PycharmProjects\One Game\background" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -144,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731426432380</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Implementación del json de estadísticas (no se hizo el commit correctamente)">
+      <option name="closed" value="true" />
+      <created>1731939313918</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731939313918</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -155,7 +177,8 @@
     <MESSAGE value="Animaciones del character más pulidas y mejores generadores de bolas" />
     <MESSAGE value="Vidas del personaje con animación" />
     <MESSAGE value="Implementación de estadísticas (persistencia) y refactorización" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementación de estadísticas (persistencia) y refactorización" />
+    <MESSAGE value="Implementación del json de estadísticas (no se hizo el commit correctamente)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementación del json de estadísticas (no se hizo el commit correctamente)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

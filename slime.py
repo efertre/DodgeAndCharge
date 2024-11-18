@@ -1,6 +1,7 @@
 import pygame
 import constants
 import random
+from utils import Utils
 
 # Generadores de parámetros aleatorios
 def random_position_generator(width, height, rect_width, rect_height, player_rect, min_distance):
@@ -22,19 +23,23 @@ def random_speed_generator(speed_range):
     while True:
         yield random.choice([-1, 1]) * random.randint(*speed_range)
 
-class Ball:
+class Slime:
     position_gen = None
     speed_gen = random_speed_generator(constants.BALL_SPEED_RANGE)
 
     def __init__(self, player_rect):
         # Cargar y escalar la imagen de la bola
-        self.image = pygame.transform.scale(pygame.image.load(constants.BALL_IMG_PATH), constants.BALL_SIZE)
+        self.animations = Utils.load_animation(constants.SLIME_IMG_PATH, 8, constants.SLIME_SIZE)
+        self.animation_index = 0
+        self.animation_counter = 0
+        self.flipped = False
 
         # Inicializar el rectángulo de la bola basado en su imagen
-        self.rect = self.image.get_rect()
+        self.rect = self.animations[0].get_rect()
 
         # Inicializar el generador de posiciones con la posición del jugador
-        self.position_gen = random_position_generator(constants.WIDTH, constants.HEIGHT, constants.BALL_SIZE[0], constants.BALL_SIZE[1], player_rect, min_distance=200)
+        self.position_gen = random_position_generator(constants.WIDTH, constants.HEIGHT, constants.SLIME_SIZE[0],
+                                                      constants.SLIME_SIZE[1], player_rect, min_distance=200)
 
         # Establecer posición inicial utilizando el generador
         self.rect.topleft = next(self.position_gen)
@@ -42,15 +47,32 @@ class Ball:
         # Establecer velocidad inicial utilizando el generador
         self.speed = [next(self.speed_gen), next(self.speed_gen)]
 
+    def animate(self, moving):
+        """ Controla la animación. """
+        if moving:
+            self.animation_counter += constants.ANIMATION_SPEED
+            if self.animation_counter >= 1:
+                self.animation_index = (self.animation_index + 1) % len(self.animations)
+                self.animation_counter = 0
+        else:
+            self.animation_index = 0
+
     def move(self):
         # Mover la bola y hacer que rebote en los bordes de la pantalla
         self.rect.move_ip(*self.speed)
-
+        moving = True
         if self.rect.left < 0 + constants.MOVEMENT_MARGIN_LEFT or self.rect.right > constants.WIDTH + constants.MOVEMENT_MARGIN_RIGHT:
             self.speed[0] = -self.speed[0]
+            self.flipped = not self.flipped
+
         if self.rect.top < 0 + constants.MOVEMENT_MARGIN_TOP or self.rect.bottom > constants.HEIGHT + constants.MOVEMENT_MARGIN_BOTTOM:
             self.speed[1] = -self.speed[1]
 
+        self.animate(moving)
+
     def draw(self, surface):
-        # Dibujar la bola en la pantalla
-        surface.blit(self.image, self.rect)
+        # Dibujar el slime con la orientación actual
+        frame = self.animations[self.animation_index]
+        if self.flipped:
+            frame = pygame.transform.flip(frame, True, False)  # Voltear horizontalmente
+        surface.blit(frame, self.rect)

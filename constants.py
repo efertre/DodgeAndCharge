@@ -26,7 +26,7 @@ CHARACTER_DOWN_PATH = "assets/character/down/down_"
 CHARACTER_LEFT_PATH = "assets/character/left/left_"
 CHARACTER_RIGHT_PATH = "assets/character/right/right_"
 CHARACTER_HEART_PATH = "assets/character/heart/heart_"
-BALL_IMG_PATH = "assets/ball/ball.png"
+SLIME_IMG_PATH = "assets/green_slime/green_slime_0"
 PROJECTILE_IMG_PATH = "assets/projectile/projectile.png"
 
 # Posición del fondo animado del menú stats y principal
@@ -35,7 +35,8 @@ BACKGROUND_SPEED = 1
 
 # Tamaños (se inicializan en initialize_constants)
 CHARACTER_SIZE = None
-BALL_SIZE = None
+SLIME_SIZE = None
+SLIME_SIZE = None
 PROJECTILE_SIZE = None
 HEART_SIZE = None
 TITLE_FONT_SIZE = None
@@ -60,7 +61,7 @@ POWER_DURATION = 10000  # AÚN QUEDA POR IMPLEMENTAR
 
 # Función para inicializar el tamaño de pantalla
 def initialize_constants(width, height):
-    global WIDTH, HEIGHT, SIZE, SCALE, CHARACTER_SIZE, BALL_SIZE, PROJECTILE_SIZE, HEART_SIZE
+    global WIDTH, HEIGHT, SIZE, SCALE, CHARACTER_SIZE, SLIME_SIZE, PROJECTILE_SIZE, HEART_SIZE
     global TITLE_FONT_SIZE, SUBTITLE_FONT_SIZE, BUTTON_FONT_SIZE, FONT_SIZE, MODE_FONT_SIZE
 
     WIDTH = width
@@ -72,7 +73,7 @@ def initialize_constants(width, height):
 
     # Escalar tamaños usando SCALE
     CHARACTER_SIZE = (int(70 * SCALE), int(80 * SCALE))
-    BALL_SIZE = (int(60 * SCALE), int(60 * SCALE))
+    SLIME_SIZE = (int(100 * SCALE), int(100 * SCALE))
     PROJECTILE_SIZE = (int(30 * SCALE), int(30 * SCALE))
     HEART_SIZE = (int(50 * SCALE), int(50 * SCALE))  # Escalado
 
