@@ -1,6 +1,7 @@
 # main.py
 import sys
 import pygame
+
 import constants
 from slime import Slime
 from camera import Camera
@@ -45,9 +46,12 @@ player = Character(center_position=(WIDTH // 2, HEIGHT // 2), width=WIDTH, heigh
 
 
 # Configuración de las bolas
-balls = []
-ADD_BALL = pygame.USEREVENT + 1
-pygame.time.set_timer(ADD_BALL, constants.BALL_SPAWN_INTERVAL)
+slimes = []
+# Evento personalizado
+ADD_SLIME = pygame.USEREVENT + 1
+
+# Configurar el temporizador para generar slimes
+pygame.time.set_timer(ADD_SLIME, constants.SLIME_SPAWN_INTERVAL)
 
 # Configuración de los proyectiles
 projectiles = []
@@ -90,6 +94,22 @@ LEVEL_HEIGHT = 2000
 
 # Inicializa la cámara en el juego
 camera = Camera(LEVEL_WIDTH, LEVEL_HEIGHT)
+
+def increase_difficulty():
+    global slimes
+
+    # Reducir el intervalo de aparición de bolas
+    if constants.SLIME_SPAWN_INTERVAL > 500:  # Limitar el intervalo mínimo a 500 ms
+        constants.SLIME_SPAWN_INTERVAL -= 500
+        pygame.time.set_timer(ADD_SLIME, constants.SLIME_SPAWN_INTERVAL)
+
+    # Incrementar la velocidad de los slimes
+    for slime in slimes:
+        slime.speed[0] *= 1.05
+        slime.speed[1] *= 1.05
+
+# Temporizador para controlar la dificultad (cada 10 segundos)
+difficulty_timer = pygame.time.get_ticks()
 
 # Bucle principal del juego
 run = True
@@ -149,8 +169,8 @@ while run:
                 elif selected_option == "Borrar datos":
                     statistics_menu.execute_option()
         elif in_play_menu:
-            if event.type == ADD_BALL:
-                balls.append(Slime(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
+            if event.type == ADD_SLIME:
+                slimes.append(Slime(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if mode == "CHARGE" and event.button == 1:  # Botón izquierdo del ratón
                     shooting = True  # Activar estado de disparo
@@ -176,17 +196,7 @@ while run:
         statistics_menu.draw()
     elif in_play_menu:
 
-        score += 1  # Incrementamos el puntaje en cada ciclo
-        mode_timer += dt  # Incrementa el temporizador del modo actual
         keys = pygame.key.get_pressed()
-
-        # Alterna el modo cada 10 segundos
-        if mode_timer >= mode_change_time:
-            mode = "CHARGE" if mode == "DODGE" else "DODGE"
-            mode_timer = 0
-            show_mode_text = True  # Activa la visualización del texto de cambio de modo
-            mode_display_timer = pygame.time.get_ticks()  # Inicia el temporizador para el texto
-            shooting = False
 
         # Movimiento del personaje
         player.move(keys)
@@ -199,11 +209,15 @@ while run:
             current_time = pygame.time.get_ticks()
             if current_time - last_shot_time >= constants.SHOOT_INTERVAL:
                 last_shot_time = current_time
-                mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
-                player_pos = pygame.Vector2(player.rect.center)
-                dir = pygame.Vector2(WIDTH / 2, HEIGHT / 2)
+                mouse_pos = pygame.Vector2(pygame.mouse.get_pos())  # Posición del ratón
+                player_pos = pygame.Vector2(player.rect.center)  # Posición del jugador
+                center_pos = WIDTH / 2, HEIGHT / 2
 
-                projectiles.append(Projectile(start_pos=player_pos, target_pos=mouse_pos, dir=dir))
+                # Dirección calculada desde la posición del centro hacia la posición del ratón (se podría mejorar)
+                dir = (mouse_pos - center_pos).normalize()
+
+                # Crear el proyectil
+                projectiles.append(Projectile(start_pos=player_pos, dir=dir))
 
         # Dibujar fondo y personaje
         screen.blit(background_img, camera.apply(background_img.get_rect()))
@@ -214,9 +228,12 @@ while run:
             projectile.move()
 
             # Verificar colisiones con las bolas
-            for ball in balls[:]:
-                if projectile.rect.colliderect(ball.rect):
-                    balls.remove(ball)
+            for slime in slimes[:]:
+                if projectile.rect.colliderect(slime.rect):
+                    score += 5  # Incrementamos el puntaje
+                    print(score)
+
+                    slimes.remove(slime)
                     projectiles.remove(projectile)
                     break
 
@@ -224,14 +241,14 @@ while run:
             if projectile.is_off_screen():
                 projectiles.remove(projectile)
 
-        # Mover y verificar colisiones de bolas
-        for ball in balls[:]:
-            ball.move()
-            if player.rect.colliderect(ball.rect):
+        # Mover y verificar colisiones de los slimes
+        for slime in slimes[:]:
+            slime.move(player.rect, mode)
+            if player.rect.colliderect(slime.rect):
 
                 player.hearts -= 1
                 heart_display.lives -= 1
-                balls.remove(ball)
+                slimes.remove(slime)
 
                 # Iniciar el efecto de temblor de pantalla
                 camera.start_shake(duration=15, intensity=10)  # Temblor de 15 frames e intensidad 10
@@ -241,17 +258,17 @@ while run:
                     save_stats(score // 60)
                     run = False  # Terminar el juego si el personaje colisiona con una bola 3 veces
 
-        # Dibujar bolas ajustadas con la cámara
-        for ball in balls:
+        # Dibujar slimes ajustados con la cámara
+        for slime in slimes:
             # Obtener el frame actual de la animación
-            frame = ball.animations[ball.animation_index]
+            frame = slime.animations[slime.animation_index]
 
-            # Verificar si la bola está volteada horizontalmente
-            if ball.flipped:
+            # Verificar si el slime está volteada horizontalmente
+            if slime.flipped:
                 frame = pygame.transform.flip(frame, True, False)  # Voltear horizontalmente si está flipped
 
-            # Dibujar la bola ajustada con la cámara
-            screen.blit(frame, camera.apply(ball.rect))
+            # Dibujar el slime ajustado con la cámara
+            screen.blit(frame, camera.apply(slime.rect))
 
 
         # Actualizar la animación de los corazones
@@ -263,6 +280,16 @@ while run:
         # Dibujar proyectiles ajustados con la cámara
         for projectile in projectiles:
             screen.blit(projectile.image, camera.apply(projectile.rect))
+
+
+        mode_timer += dt  # Incrementa el temporizador del modo actual
+        # Alterna el modo cada 10 segundos
+        if mode_timer >= mode_change_time:
+            mode = "CHARGE" if mode == "DODGE" else "DODGE"
+            mode_timer = 0
+            show_mode_text = True  # Activa la visualización del texto de cambio de modo
+            mode_display_timer = pygame.time.get_ticks()  # Inicia el temporizador para el texto
+            shooting = False
 
         # Muestra texto de modo en pantalla durante 2 segundos
         if show_mode_text:
@@ -283,11 +310,17 @@ while run:
             if pygame.time.get_ticks() - mode_display_timer >= mode_display_time:
                 show_mode_text = False
 
+            # Incrementar la dificultad cada 10 segundos
+            if pygame.time.get_ticks() - difficulty_timer > 10000:  # Cada 10 segundos
+                increase_difficulty()
+                difficulty_timer = pygame.time.get_ticks()
+
         # Mostrar puntaje en la pantalla
         font = pygame.font.Font(constants.FONT_PATH, constants.FONT_SIZE)
-        score_text = font.render(f"Puntos: {score // 60}", True,
-                                     constants.WHITE)  # Dividimos para obtener puntos por segundo
+        score_text = font.render(f"Puntos: {score}", True,
+                                     constants.WHITE)
         screen.blit(score_text, (10, 10))
+
     pygame.display.flip()
 
 pygame.quit()

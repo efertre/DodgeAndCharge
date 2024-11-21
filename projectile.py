@@ -1,18 +1,28 @@
 # projectile.py
+import math
 from turtledemo.penrose import start
 
 import pygame
 import constants
 
 class Projectile:
-    def __init__(self, start_pos, target_pos, dir):
+    def __init__(self, start_pos, dir):
         # Cargar y escalar imagen del proyectil
         self.image = pygame.transform.scale(pygame.image.load(constants.PROJECTILE_IMG_PATH), constants.PROJECTILE_SIZE)
         # El proyectil se coloca en la posición central del jugador
         self.rect = self.image.get_rect(center=start_pos)
 
-        # Calcular la dirección normalizada hacia el objetivo, desde el centro del mapa a la dirección del cursor
-        self.direction = (target_pos - dir).normalize()
+        # Dirección normalizada hacia el objetivo
+        self.direction = dir
+
+        # Calcular el ángulo de rotación basado en la dirección
+        self.angle = math.degrees(
+            math.atan2(-self.direction[1], self.direction[0]))  # Negar Y para ajustar a coordenadas Pygame
+
+        # Rotar la imagen del proyectil
+        self.image = pygame.transform.rotate(self.image, self.angle)
+        # Actualizar el rectángulo después de rotar
+        self.rect = self.image.get_rect(center=self.rect.center)
 
     def move(self):
         # Mover el proyectil en la dirección calculada

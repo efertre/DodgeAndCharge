@@ -54,7 +54,7 @@ MOVEMENT_MARGIN_RIGHT = 250
 FONT_PATH = "assets/fonts/pixel.ttf"
 
 # Configuración de bolas
-BALL_SPAWN_INTERVAL = 2500  # en milisegundos (2.5 segundos)
+SLIME_SPAWN_INTERVAL = 5000  # en milisegundos (5 segundos)
 POWER_SPAWN_INTERVAL = 15000  # AÚN QUEDA POR IMPLEMENTAR
 POWER_DURATION = 10000  # AÚN QUEDA POR IMPLEMENTAR
 

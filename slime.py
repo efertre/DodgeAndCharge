@@ -57,17 +57,40 @@ class Slime:
         else:
             self.animation_index = 0
 
-    def move(self):
-        # Mover la bola y hacer que rebote en los bordes de la pantalla
-        self.rect.move_ip(*self.speed)
+    def move(self, player_rect, mode):
+        """Mueve el slime dependiendo del modo (DODGE o CHARGE)."""
         moving = True
+        player_center = pygame.Vector2(player_rect.center)
+        slime_center = pygame.Vector2(self.rect.center)
+        direction = (0,0)
+
+        # Comportamiento para los diferentes modos
+        if mode == "DODGE":
+            # Mover hacia el jugador
+            direction = (player_center - slime_center).normalize()
+        elif mode == "CHARGE":
+            # Moverse lejos del jugador
+            direction = (slime_center - player_center).normalize()
+
+        # Verifica que no sea un vector nulo
+        if direction.length() > 0:
+            direction = direction.normalize()
+        else:
+            moving = False  # Detener movimiento si no hay dirección válida
+
+        # Actualizar la posición del slime en base a la dirección
+        self.rect.x += direction.x * self.speed[0]
+        self.rect.y += direction.y * self.speed[1]
+
+        # Asegurarse de que no salga de los límites
         if self.rect.left < 0 + constants.MOVEMENT_MARGIN_LEFT or self.rect.right > constants.WIDTH + constants.MOVEMENT_MARGIN_RIGHT:
             self.speed[0] = -self.speed[0]
-            self.flipped = not self.flipped
+            self.flipped = not self.flipped  # Voltear la animación horizontalmente al chocar
 
         if self.rect.top < 0 + constants.MOVEMENT_MARGIN_TOP or self.rect.bottom > constants.HEIGHT + constants.MOVEMENT_MARGIN_BOTTOM:
             self.speed[1] = -self.speed[1]
 
+        # Animar el slime
         self.animate(moving)
 
     def draw(self, surface):

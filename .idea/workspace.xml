@@ -4,21 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Implementación del json de estadísticas (no se hizo el commit correctamente)">
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_04.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_05.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_06.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_07.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/green_slime/green_slime_08.png" afterDir="false" />
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Rework gráfico enemigo y animación al sufrir daños">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ball/ball.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/slime.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectile.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slime.py" beforeDir="false" afterPath="$PROJECT_DIR$/slime.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/stats.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +57,7 @@
     &quot;Python.mainMenu.executor&quot;: &quot;Run&quot;,
     &quot;Python.principal.executor&quot;: &quot;Run&quot;,
     &quot;Python.projectile.executor&quot;: &quot;Run&quot;,
+    &quot;Python.slime.executor&quot;: &quot;Run&quot;,
     &quot;Python.statsMenu.executor&quot;: &quot;Run&quot;,
     &quot;Python.utils.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -166,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731939313918</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Rework gráfico enemigo y animación al sufrir daños">
+      <option name="closed" value="true" />
+      <created>1731946232108</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731946232108</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -178,7 +178,8 @@
     <MESSAGE value="Vidas del personaje con animación" />
     <MESSAGE value="Implementación de estadísticas (persistencia) y refactorización" />
     <MESSAGE value="Implementación del json de estadísticas (no se hizo el commit correctamente)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementación del json de estadísticas (no se hizo el commit correctamente)" />
+    <MESSAGE value="Rework gráfico enemigo y animación al sufrir daños" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rework gráfico enemigo y animación al sufrir daños" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
