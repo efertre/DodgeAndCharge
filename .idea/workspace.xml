@@ -4,13 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Rework gráfico enemigo y animación al sufrir daños">
+    <list default="true" id="e9b59189-9f08-404d-8312-63f408291b50" name="Changes" comment="Rework comportamiento enemigo y rotación del disparo">
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/character/death/death_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/optionsMenu.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/charge_mode.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/collision_sound.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/dodge_mode.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/fight_soundtrack.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/fireball_sound.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/hover_sound.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/main_menu_soundtrack.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/slime_death.ogg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/character.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/principal.py" beforeDir="false" afterPath="$PROJECT_DIR$/principal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projectile.py" beforeDir="false" afterPath="$PROJECT_DIR$/projectile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slime.py" beforeDir="false" afterPath="$PROJECT_DIR$/slime.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/stats.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statsMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/statsMenu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,27 +67,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.ball.executor&quot;: &quot;Run&quot;,
-    &quot;Python.camera.executor&quot;: &quot;Run&quot;,
-    &quot;Python.character.executor&quot;: &quot;Run&quot;,
-    &quot;Python.constants.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainMenu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.principal.executor&quot;: &quot;Run&quot;,
-    &quot;Python.projectile.executor&quot;: &quot;Run&quot;,
-    &quot;Python.slime.executor&quot;: &quot;Run&quot;,
-    &quot;Python.statsMenu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.utils.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/welco/PycharmProjects/One Game&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ball.executor": "Run",
+    "Python.camera.executor": "Run",
+    "Python.character.executor": "Run",
+    "Python.constants.executor": "Run",
+    "Python.mainMenu.executor": "Run",
+    "Python.optionsMenu.executor": "Run",
+    "Python.principal.executor": "Run",
+    "Python.projectile.executor": "Run",
+    "Python.slime.executor": "Run",
+    "Python.statsMenu.executor": "Run",
+    "Python.utils.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/welco/PycharmProjects/One Game/sound",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\welco\PycharmProjects\One Game\sound" />
       <recent name="C:\Users\welco\PycharmProjects\One Game" />
+      <recent name="C:\Users\welco\PycharmProjects\One Game\assets\character\death" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\welco\PycharmProjects\One Game\assets\green_slime" />
@@ -166,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731946232108</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Rework comportamiento enemigo y rotación del disparo">
+      <option name="closed" value="true" />
+      <created>1732190230147</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732190230147</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -179,17 +209,7 @@
     <MESSAGE value="Implementación de estadísticas (persistencia) y refactorización" />
     <MESSAGE value="Implementación del json de estadísticas (no se hizo el commit correctamente)" />
     <MESSAGE value="Rework gráfico enemigo y animación al sufrir daños" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rework gráfico enemigo y animación al sufrir daños" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/statsMenu.py</url>
-          <line>112</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Rework comportamiento enemigo y rotación del disparo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rework comportamiento enemigo y rotación del disparo" />
   </component>
 </project>

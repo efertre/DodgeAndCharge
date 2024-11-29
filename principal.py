@@ -1,8 +1,11 @@
 # main.py
 import sys
+
 import pygame
 
 import constants
+import optionsMenu
+from optionsMenu import OptionsMenu
 from slime import Slime
 from camera import Camera
 from character import Character
@@ -30,6 +33,40 @@ pygame.display.set_caption("Dodge & Charge")
 # Variable para verificar si está en pantalla completa
 fullscreen = False
 
+# Variables de sonido
+# Inicializar pygame mixer
+pygame.mixer.init()
+
+# Cargar sonidos
+dodge_sound = pygame.mixer.Sound("sound/dodge_mode.wav")
+charge_sound = pygame.mixer.Sound("sound/charge_mode.wav")
+collision_sound = pygame.mixer.Sound("sound/collision_sound.ogg")
+slime_death_sound = pygame.mixer.Sound("sound/slime_death.ogg")
+fireball_sound = pygame.mixer.Sound("sound/fireball_sound.ogg")
+# Ruta de las pistas
+main_menu_sound = "sound/main_menu_soundtrack.wav"
+fight_menu_sound = "sound/fight_soundtrack.wav"
+
+# Instancia del Menú Opciones (se instancia primero para que carguen los ajustes antes)
+options_menu = OptionsMenu(screen)
+in_options_menu = False
+
+# Variables de volumen de audio
+
+music_volume = optionsMenu.global_music_volume # Volumen inicial de la música
+sfx_volume = optionsMenu.global_sfx_volume    # Volumen inicial de efectos de sonido
+
+# Aplicar volumen inicial
+pygame.mixer.music.set_volume(music_volume/100)
+dodge_sound.set_volume(sfx_volume/100)
+charge_sound.set_volume(sfx_volume/100)
+collision_sound.set_volume(sfx_volume/100)
+slime_death_sound.set_volume(sfx_volume/100)
+fireball_sound.set_volume(sfx_volume/350) # En 350 porque el sonido este está muy fuerte
+
+# Variable para rastrear qué música está activa
+current_music = None
+
 # Título de la ventana
 pygame.display.set_caption("Dodge & Charge")
 
@@ -44,9 +81,9 @@ except pygame.error:
 # Configuración del personaje
 player = Character(center_position=(WIDTH // 2, HEIGHT // 2), width=WIDTH, height=HEIGHT)
 
-
-# Configuración de las bolas
+# Configuración de las slimes
 slimes = []
+
 # Evento personalizado
 ADD_SLIME = pygame.USEREVENT + 1
 
@@ -72,7 +109,7 @@ background_x = 0  # Posición inicial del fondo en X
 background_speed = 1  # Velocidad de desplazamiento del fondo
 
 # Instancia del Menú Principal
-menu = MainMenu(screen)
+main_menu = MainMenu(screen)
 in_main_menu = True  # Comienza en el menú principal
 
 # Instancia del Menú Estadísticas
@@ -126,11 +163,11 @@ while run:
         if in_main_menu: # Si se encuentra en el menú principal
             # Eventos del menú
             if event.type == pygame.MOUSEMOTION: # Controla los movimientos de la posición del ratón
-                menu.handle_mouse(event.pos)
+                main_menu.handle_mouse(event.pos)
             elif event.type == pygame.MOUSEBUTTONDOWN: # Controla los clics del ratón
-                btnSelected = menu.handle_mouse(event.pos)
+                btnSelected = main_menu.handle_mouse(event.pos)
             elif event.type == pygame.KEYDOWN: # Controla las teclas presionadas
-                btnSelected = menu.handle_keys(event)
+                btnSelected = main_menu.handle_keys(event)
                 if event.key == pygame.K_F11: # Si se le da a la tecla F11 se pone en Pantalla Completa
                     # Alternar entre pantalla completa y modo ventana
                     fullscreen = not fullscreen
@@ -145,7 +182,8 @@ while run:
                 in_main_menu = False
                 in_play_menu = True
             elif btnSelected == "Opciones":
-                print("Opciones seleccionadas")  # Puede redirigir a una pantalla de opciones (FALTA POR IMPLEMENTAR)
+                in_main_menu = False
+                in_options_menu = True
             elif btnSelected == "Estadísticas":
                 in_main_menu = False
                 in_statistics_menu = True  # Cambiar al menú de estadísticas
@@ -168,11 +206,43 @@ while run:
                     in_main_menu = True
                 elif selected_option == "Borrar datos":
                     statistics_menu.execute_option()
+        elif in_options_menu:
+            # Manejar eventos para el menú de opciones
+            if event.type == pygame.MOUSEMOTION:
+                selected_option = options_menu.handle_mouse(event.pos)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                selected_option = options_menu.handle_mouse(event.pos)
+                if selected_option == "Volver":
+                    in_options_menu = False
+                    in_main_menu = True
+
+                    dodge_sound.set_volume(options_menu.sfx_volume / 100)
+                    charge_sound.set_volume(options_menu.sfx_volume / 100)
+                    collision_sound.set_volume(options_menu.sfx_volume / 100)
+                    slime_death_sound.set_volume(options_menu.sfx_volume / 100)
+                    fireball_sound.set_volume(options_menu.sfx_volume / 350)
+            elif event.type == pygame.KEYDOWN:
+                selected_option = options_menu.handle_keys(event)
+
+                if selected_option == "Volver":
+                    in_options_menu = False
+                    in_main_menu = True
+
+                    dodge_sound.set_volume(options_menu.sfx_volume / 100)
+                    charge_sound.set_volume(options_menu.sfx_volume / 100)
+                    collision_sound.set_volume(options_menu.sfx_volume / 100)
+                    slime_death_sound.set_volume(options_menu.sfx_volume / 100)
+                    fireball_sound.set_volume(options_menu.sfx_volume / 350)
+
+
+
+
         elif in_play_menu:
             if event.type == ADD_SLIME:
-                slimes.append(Slime(player.rect))  # Creación de bolas aleatorias (con distancia de seguridad frente al jugador)
+                slimes.append(Slime(player.rect))  # Creación de slimes aleatorias (con distancia de seguridad frente al jugador)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if mode == "CHARGE" and event.button == 1:  # Botón izquierdo del ratón
+
                     shooting = True  # Activar estado de disparo
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
@@ -191,10 +261,25 @@ while run:
 
         # Si está en el menú, dibujarlo; si no, correr el juego
     if in_main_menu:
-        menu.draw()
+        # Si la música actual no es la del menú principal, cambiarla
+        if current_music != "main_menu":
+            pygame.mixer.music.fadeout(500)  # Transición suave
+            pygame.mixer.music.load(main_menu_sound)
+            pygame.mixer.music.play(-1)  # Reproducir en bucle
+            current_music = "main_menu"  # Actualizar el estado de música actual
+        main_menu.draw()
     elif in_statistics_menu:
         statistics_menu.draw()
+    elif in_options_menu:
+
+        options_menu.draw()
     elif in_play_menu:
+        # Si la música actual no es la del menú de juego, cambiarla
+        if current_music != "fight_menu":
+            pygame.mixer.music.fadeout(500)  # Transición suave
+            pygame.mixer.music.load(fight_menu_sound)
+            pygame.mixer.music.play(-1)  # Reproducir en bucle
+            current_music = "fight_menu"  # Actualizar el estado de música actual
 
         keys = pygame.key.get_pressed()
 
@@ -218,6 +303,7 @@ while run:
 
                 # Crear el proyectil
                 projectiles.append(Projectile(start_pos=player_pos, dir=dir))
+                fireball_sound.play()
 
         # Dibujar fondo y personaje
         screen.blit(background_img, camera.apply(background_img.get_rect()))
@@ -227,12 +313,11 @@ while run:
         for projectile in projectiles[:]:
             projectile.move()
 
-            # Verificar colisiones con las bolas
+            # Verificar colisiones con los slimes
             for slime in slimes[:]:
                 if projectile.rect.colliderect(slime.rect):
                     score += 5  # Incrementamos el puntaje
-                    print(score)
-
+                    slime_death_sound.play()
                     slimes.remove(slime)
                     projectiles.remove(projectile)
                     break
@@ -245,18 +330,31 @@ while run:
         for slime in slimes[:]:
             slime.move(player.rect, mode)
             if player.rect.colliderect(slime.rect):
-
+                collision_sound.play()
                 player.hearts -= 1
                 heart_display.lives -= 1
                 slimes.remove(slime)
+                camera.start_shake(duration=15, intensity=10)  # Efecto de temblor
 
-                # Iniciar el efecto de temblor de pantalla
-                camera.start_shake(duration=15, intensity=10)  # Temblor de 15 frames e intensidad 10
+                if player.hearts == 0 and not player.is_dead:
+                    player.is_dead = True  # Activar estado de muerte
+                    player.set_direction("death")
+                    player.animation_index = 0 # Reiniciar la animación de muerte
+                    player.animation_counter = 0
 
-                if player.hearts == 0:
-                    # Guarda el puntaje total (dividiendo entre 60 para puntos por segundo)
-                    save_stats(score // 60)
-                    run = False  # Terminar el juego si el personaje colisiona con una bola 3 veces
+                if player.is_dead:
+                    if player.animate(False):  # Si la animación de muerte terminó
+                        # save_stats(score)  # Guardar estadísticas antes de salir
+                        # Podrías reiniciar el juego en lugar de cerrar
+                        # in_play_menu = False
+                        # in_main_menu = True
+                        # Resetear estados relevantes:
+                        # slimes = []
+                        # projectiles = []
+                        # player.hearts = 3
+                        # heart_display.lives = 3
+                        # player.is_dead = False
+                        pass
 
         # Dibujar slimes ajustados con la cámara
         for slime in slimes:
@@ -286,6 +384,10 @@ while run:
         # Alterna el modo cada 10 segundos
         if mode_timer >= mode_change_time:
             mode = "CHARGE" if mode == "DODGE" else "DODGE"
+            if mode == "DODGE":
+                dodge_sound.play()
+            else:
+                charge_sound.play()
             mode_timer = 0
             show_mode_text = True  # Activa la visualización del texto de cambio de modo
             mode_display_timer = pygame.time.get_ticks()  # Inicia el temporizador para el texto

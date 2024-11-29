@@ -1,4 +1,6 @@
 import pygame
+
+import optionsMenu
 from utils import load_stats, reset_stats  # Supone que tienes una función reset_statistics en utils
 import constants
 
@@ -16,6 +18,9 @@ class StatsMenu:
         # Posiciones de las estadísticas
         self.spacing_y = 50 #
         self.start_y = self.title_rect.bottom + 20
+        # Cargar sonidos
+        self.hover_sound = pygame.mixer.Sound("sound/hover_sound.ogg")
+        self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
 
         # Cargar el fondo para el menú
         try:
@@ -24,7 +29,7 @@ class StatsMenu:
         except pygame.error:
             print("No se pudo cargar la imagen de fondo del menú estadísticas.")
 
-# Metodo para dibujar todos los componentes del menu de estadisticas
+    # Metodo para dibujar todos los componentes del menu de estadisticas
     def draw(self):
         self.draw_animated_bg()
 
@@ -42,7 +47,7 @@ class StatsMenu:
             option_rect = option_surf.get_rect(center=(constants.WIDTH // 2, self.start_y + self.spacing_y * (5 + index)))
             self.screen.blit(option_surf, option_rect)
 
-# Metodo para dibujar las estadisticas
+    # Metodo para dibujar las estadisticas
     def draw_stats(self, avg_score_text, best_score_text, games_played_text, total_score_text):
         # Renderizar las estadísticas
         best_score_surf = self.font.render(best_score_text, True, constants.WHITE)
@@ -59,7 +64,7 @@ class StatsMenu:
         self.screen.blit(games_played_surf,
                          (constants.WIDTH // 2 - games_played_surf.get_width() // 2, self.start_y + self.spacing_y * 3))
 
-# Metodo para cargar las estadisticas desde la clase utils
+    # Metodo para cargar las estadisticas desde la clase utils
     def load_stats_from_utils(self):
         # Cargar estadísticas y mostrarlas en pantalla
         stats = load_stats()
@@ -69,7 +74,7 @@ class StatsMenu:
         games_played_text = f"Partidas Jugadas: {stats['games_played']}"
         return avg_score_text, best_score_text, games_played_text, total_score_text
 
-# Metodo para dibujar el fondo animado
+    # Metodo para dibujar el fondo animado
     def draw_animated_bg(self):
         # Dibujar fondo animado con desplazamiento (realmente es como duplicar el fondo uno seguido del otro)
         self.screen.blit(self.background_img, (constants.BACKGROUND_POSITION, 0))
@@ -80,9 +85,11 @@ class StatsMenu:
         if constants.BACKGROUND_POSITION >= self.bg_width:
             constants.BACKGROUND_POSITION = 0
 
-
-# Metodo para controlar las teclas
+    # Metodo para controlar las teclas
     def handle_keys(self, event):
+        # Guardar el índice del último botón seleccionado
+        last_index = self.selected_index
+
         # Navegar entre opciones con teclas de dirección
         if event.key in (pygame.K_DOWN, pygame.K_s):
             self.selected_index = (self.selected_index + 1) % len(self.options)
@@ -93,8 +100,16 @@ class StatsMenu:
         elif event.key == pygame.K_ESCAPE:
             return "Volver"
 
-# Metodo para controlar el ratón
+        # Solo reproducir el sonido de hover si el índice ha cambiado
+        if last_index != self.selected_index:
+            self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
+            self.hover_sound.play()
+
+    # Metodo para controlar el ratón
     def handle_mouse(self, mouse_pos):
+        # Guardar el índice del último botón seleccionado
+        last_index = self.selected_index
+
         # Detectar si el mouse está sobre alguna opción
         for index, option_text in enumerate(self.options):
             # Calcular la posición de cada opción ("Volver" y "Borrar datos")
@@ -107,9 +122,15 @@ class StatsMenu:
             # Comprobar si el mouse está sobre el rectángulo de esta opción
             if option_rect.collidepoint(mouse_pos):
                 self.selected_index = index  # Cambia el índice al botón correspondiente
-                return self.options[index]  # Retorna la opción si el mouse está sobre ella
 
-# Metodo para reiniciar los datos del jugador
+        # Solo reproducir el sonido de hover si el índice ha cambiado
+        if last_index != self.selected_index:
+            self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
+            self.hover_sound.play()
+
+        return self.options[self.selected_index]  # Retorna la opción si el mouse está sobre ella
+
+    # Metodo para reiniciar los datos del jugador
     def execute_option(self):
         # Ejecuta la opción seleccionada
         if self.options[self.selected_index] == "Borrar datos":

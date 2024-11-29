@@ -1,6 +1,8 @@
 # mainMenu.py
 import pygame
 import constants
+import optionsMenu
+
 
 class MainMenu:
     def __init__(self, screen):
@@ -13,6 +15,11 @@ class MainMenu:
         self.title = "Dodge & Charge"
         self.subtitle = "creado por efertre"
 
+
+
+        # Cargar sonidos
+        self.hover_sound = pygame.mixer.Sound("sound/hover_sound.ogg")
+        self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
         # Cargar el fondo para el menú
         try:
             self.background_img = pygame.image.load(constants.MAIN_MENU_BACKGROUND_IMG_PATH).convert()
@@ -53,16 +60,29 @@ class MainMenu:
 
     # Metodo para controlar el ratón
     def handle_mouse(self, mouse_pos):
+        # Variable para almacenar el índice del último botón sobre el que el mouse pasó
+        last_index = self.selected_index
+
         # Detectar si el mouse está sobre algún botón
         for index, button_text in enumerate(self.buttons):
             button_rect = self.button_font.render(button_text, True, constants.WHITE).get_rect(
                 center=(constants.WIDTH // 2, constants.HEIGHT // 2 + index * 40))
+
             if button_rect.collidepoint(mouse_pos):
-                self.selected_index = index
+                self.selected_index = index  # Actualizar el índice seleccionado
+
+                # Solo reproducir el sonido si el mouse ha cambiado de botón
+                if last_index != self.selected_index:
+
+                    self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
+                    self.hover_sound.play()
                 return self.buttons[index]
 
     # Metodo para controlar las teclas
     def handle_keys(self, event):
+        # Guardar el índice del último botón seleccionado
+        last_index = self.selected_index
+
         # Navegación con teclas
         if event.key in (pygame.K_DOWN, pygame.K_s):
             self.selected_index = (self.selected_index + 1) % len(self.buttons)
@@ -70,3 +90,13 @@ class MainMenu:
             self.selected_index = (self.selected_index - 1) % len(self.buttons)
         elif event.key == pygame.K_RETURN:
             return self.buttons[self.selected_index]  # Retorna el botón seleccionado cuando presionas ENTER
+
+        # Solo reproducir el sonido si el índice ha cambiado
+        if last_index != self.selected_index:
+
+            self.hover_sound.set_volume(optionsMenu.global_sfx_volume / 100)
+            self.hover_sound.play()
+
+
+
+
