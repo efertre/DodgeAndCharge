@@ -77,6 +77,7 @@ class OptionsMenu:
         knob_y = y_position + self.slider_height // 2
         pygame.draw.circle(self.screen, self.knob_color, (int(knob_x), int(knob_y)), 10)
 
+    # Dibujar el fondo animado
     def draw_animated_bg(self):
         self.screen.blit(self.background_img, (constants.BACKGROUND_POSITION, 0))
         self.screen.blit(self.background_img, (constants.BACKGROUND_POSITION - self.bg_width, 0))
@@ -84,6 +85,7 @@ class OptionsMenu:
         if constants.BACKGROUND_POSITION >= self.bg_width:
             constants.BACKGROUND_POSITION = 0
 
+    # Controlar los eventos con las teclas para navegar por el menu
     def handle_keys(self, event):
         last_index = self.selected_index
         if event.key in (pygame.K_DOWN, pygame.K_s):
@@ -117,6 +119,7 @@ class OptionsMenu:
             elif not pygame.mouse.get_pressed()[0]:  # Soltar el arrastre
                 self.dragging_music = False
 
+            # Si está interactuando con el slider ajustar la música
             if self.dragging_music:
                 global_music_volume = int((mouse_x - x_position) / self.slider_width * 100)
                 global_music_volume = min(max(global_music_volume, 0), 100)
@@ -157,6 +160,7 @@ class OptionsMenu:
         self.save_settings()
         return None  # Si no hay interacción con ningún botón
 
+    # Metodo para ajustar volumen
     def adjust_volume(self, change):
         global global_music_volume, global_sfx_volume
         global_sfx_volume = self.sfx_volume

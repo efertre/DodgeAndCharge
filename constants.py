@@ -37,7 +37,6 @@ BACKGROUND_SPEED = 1
 # Tamaños (se inicializan en initialize_constants)
 CHARACTER_SIZE = None
 SLIME_SIZE = None
-SLIME_SIZE = None
 PROJECTILE_SIZE = None
 HEART_SIZE = None
 TITLE_FONT_SIZE = None
@@ -56,9 +55,6 @@ FONT_PATH = "assets/fonts/pixel.ttf"
 
 # Configuración de bolas
 SLIME_SPAWN_INTERVAL = 5000  # en milisegundos (5 segundos)
-POWER_SPAWN_INTERVAL = 15000  # AÚN QUEDA POR IMPLEMENTAR
-POWER_DURATION = 10000  # AÚN QUEDA POR IMPLEMENTAR
-
 
 # Función para inicializar el tamaño de pantalla
 def initialize_constants(width, height):

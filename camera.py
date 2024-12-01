@@ -1,8 +1,8 @@
 import random
 import pygame
 import constants
-
 class Camera:
+
     def __init__(self, width, height):
         self.camera_rect = pygame.Rect(0, 0, width, height)  # Área de la cámara
         self.width = width
@@ -45,6 +45,26 @@ class Camera:
         self.camera_rect = pygame.Rect(x + self.shake_offset.x, y + self.shake_offset.y, self.width, self.height)
 
     def apply(self, obj):
-        """ Ajusta la posición de cualquier objeto en función de la cámara """
+        """
+        Ajusta la posición de cualquier objeto en función de la posición de la cámara.
+        Esto permite que los objetos en el mapa se muestren correctamente en la ventana de visualización
+        según el desplazamiento actual de la cámara.
+        """
+
+        # Verifica si el objeto tiene un atributo 'rect' (lo cual es común para sprites y objetos de juego).
+        # Si lo tiene, utilizamos su rectángulo; si no, asumimos que 'obj' ya es un rectángulo (pygame.Rect).
         rect = obj.rect if hasattr(obj, 'rect') else obj
+
+        # Ajusta las coordenadas del rectángulo del objeto según la posición de la cámara.
+        # 'self.camera_rect.topleft' representa el desplazamiento de la cámara desde el origen del mapa.
+        # 'rect.move()' devuelve un nuevo rectángulo desplazado.
         return rect.move(self.camera_rect.topleft)
+
+    def reset(self):
+        """Reinicia la cámara a su posición inicial"""
+        self.camera_rect = pygame.Rect(0, 0, self.width, self.height)  # Resetear la posición de la cámara
+        self.shaking = False  # Desactivar el temblor
+        self.shake_duration = 0  # Resetear la duración del temblor
+        self.shake_intensity = 5  # Intensidad predeterminada
+        self.shake_offset = pygame.Vector2(0, 0)  # Resetear el desplazamiento del temblor
+

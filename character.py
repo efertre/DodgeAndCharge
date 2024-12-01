@@ -4,10 +4,9 @@ from constants import MOVEMENT_MARGIN_LEFT
 from utils import Utils
 
 class Character:
-    def __init__(self, center_position, width, height):
+    def __init__(self, center_position):
         # Recibe los nuevos parámetros WIDTH y HEIGHT
-        self.width = width
-        self.height = height
+
         self.animations = {
             "up": Utils.load_animation(constants.CHARACTER_UP_PATH, 4, constants.CHARACTER_SIZE),
             "down": Utils.load_animation(constants.CHARACTER_DOWN_PATH, 6, constants.CHARACTER_SIZE),
@@ -57,29 +56,32 @@ class Character:
             self.animation_index = 0
 
     def animate(self, moving):
-        """ Controla la animación basada en si el personaje se está moviendo. """
+        """ Controla la animación basada en el estado del personaje. """
 
+        # Lógica para la animación de muerte
         if self.is_dead:
             self.animation_counter += constants.ANIMATION_SPEED
-            print(f"MUERTO: {self.animation_counter}")
+
             if self.animation_counter >= 1:
                 self.animation_index += 1
                 self.animation_counter = 0
-            else:
-                self.animation_index = 0
-                return True
 
+            # Si hemos terminado la animación de muerte, devolver True
+            if self.animation_index >= len(self.current_direction):
+                self.animation_index = len(self.current_direction) - 1  # Mantener el último cuadro
+                return True
+            return False
+
+        # Lógica para animaciones normales (moviéndose o no)
         if moving:
             self.animation_counter += constants.ANIMATION_SPEED
-            print(self.animation_counter)
             if self.animation_counter >= 1:
                 self.animation_index = (self.animation_index + 1) % len(self.current_direction)
                 self.animation_counter = 0
         else:
             self.animation_index = 0
+
         return False
-
-
 
     def draw(self, surface, camera):
         """ Dibuja el personaje en la superficie y ajusta la posición con la cámara. """
@@ -87,4 +89,9 @@ class Character:
 
         surface.blit(self.current_direction[self.animation_index], adjusted_position)
 
-
+    def reset(self, position):
+        self.rect.center = position  # Reinicia la posición
+        self.set_direction("down")  # Cambia la animación al estado inicial
+        self.animation_index = 0  # Reinicia las animaciones
+        self.animation_counter = 0  # Reinicia el contador de animación
+        self.hearts = 3  # Reinicia la cantidad de vidas
